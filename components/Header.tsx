@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 export const Header = () => {
   return (
-    <div className='flex justify-between border-2 border-red-500 mb-20'>
+    <div className='flex justify-between mb-20 text-lg'>
       <div className='icon'>
         <Link href={'/'}>Aaron</Link>
       </div>
