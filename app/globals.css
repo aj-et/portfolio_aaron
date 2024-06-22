@@ -74,3 +74,12 @@
       @apply bg-background text-foreground;
     }
   }
+
+  .icon-container {
+    @apply bg-black rounded-full p-1;
+    transition: transform 0.2s ease-in-out;
+  }
+
+  .icon-container:hover {
+    transform: scale(1.2);
+  }
