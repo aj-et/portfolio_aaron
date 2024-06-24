@@ -18,7 +18,9 @@ export const Header = () => {
       </div>
 
       <div className='flex space-x-4'>
+        <button onClick={() => handleSmoothScroll('tech')}>Tech</button>
         <button onClick={() => handleSmoothScroll('project')}>Projects</button>
+        <button onClick={() => handleSmoothScroll('experience')}>Experience</button>
         <button onClick={() => handleSmoothScroll('contact')}>Contact Me</button>
       </div>
     </div>
