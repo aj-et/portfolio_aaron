@@ -12,6 +12,7 @@
     "studio": "drizzle-kit studio"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.3.3",
     "@neondatabase/serverless": "^0.9.3",
     "@next/env": "^14.2.4",
     "@uploadthing/react": "^6.6.0",

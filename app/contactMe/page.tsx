@@ -1,8 +1,11 @@
 import React from 'react'
+import Card_Email from '@/components/Card_Email'
 
 const ContactMePage = () => {
   return (
-    <div>Contact Me Page</div>
+    <div>
+      <Card_Email />
+    </div>
   )
 }
 
