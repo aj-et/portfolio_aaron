@@ -8,6 +8,7 @@ import {
     CardHeader
 } from "@/components/ui/card";
 import ReCAPTCHA from 'react-google-recaptcha';
+import { toast, useToast } from './ui/use-toast';
 
 const Card_Email = () => {
     const [formState, setFormState] = useState({
@@ -17,6 +18,7 @@ const Card_Email = () => {
     });
     const [captchaToken, setCaptchaToken] = useState<string | null>(null);
 
+    const { toast } = useToast();
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormState({
@@ -50,15 +52,25 @@ const Card_Email = () => {
             process.env.NEXT_PUBLIC_EMAIL_JS_PUBLIC_KEY
         )
         .then((result) => {
-            console.log(result.text);
+            toast({
+            description: "Your message has been sent.",
+            })
             setFormState({
                 name: '',
                 email: '',
                 message: '',
             });
             setCaptchaToken(null);
+            
+            setTimeout(() => {
+                window.location.reload();
+            }, 3000);
         }, (error) => {
             console.log(error.text);
+            toast({
+                title: "Uh oh! Something went wrong.",
+                description: "There was a problem sending your message.",
+            })
         });
     };
 
