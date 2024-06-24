@@ -1,7 +1,16 @@
+'use client'
+
 import React from 'react'
 import Link from 'next/link'
 
 export const Header = () => {
+  const handleSmoothScroll = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className='flex justify-between mb-20 text-lg'>
       <div className='icon'>
@@ -9,8 +18,8 @@ export const Header = () => {
       </div>
 
       <div className='flex space-x-4'>
-        <Link href={'/projects'}>Projects</Link>
-        <Link href={'/contactMe'}>Contact Me</Link>
+        <button onClick={() => handleSmoothScroll('project')}>Projects</button>
+        <button onClick={() => handleSmoothScroll('contact')}>Contact Me</button>
       </div>
     </div>
   )
