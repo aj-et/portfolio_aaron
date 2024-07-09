@@ -64,7 +64,7 @@ const Card_Email = () => {
             
             setTimeout(() => {
                 window.location.reload();
-            }, 3000);
+            }, 1000);
         }, (error) => {
             console.log(error.text);
             toast({
@@ -76,7 +76,7 @@ const Card_Email = () => {
 
     return (
         <div className='flex justify-center mb-10'>
-            <Card className='flex flex-col xl:w-[500px]'>
+            <Card className='flex flex-col w-[325px] xl:w-[500px]'>
                 <CardHeader>
                     <h2 className="text-lg font-bold">Contact Me</h2>
                 </CardHeader>
@@ -122,6 +122,7 @@ const Card_Email = () => {
                                 <ReCAPTCHA
                                     sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
                                     onChange={handleCaptchaChange}
+                                    className='flex justify-center xl:justify-start'
                                 />
                         </div>
                         <div className="flex justify-center">

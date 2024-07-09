@@ -12,9 +12,9 @@ export const Header = () => {
   };
 
   return (
-    <div className='flex justify-between mb-20 text-lg'>
+    <div className='flex flex-col md:flex-row justify-between mb-20 text-lg'>
       <div className='icon'>
-        <Link href={'/'}>Aaron</Link>
+        <Link href={'/'}>&lt;/ Aaron &gt;</Link>
       </div>
 
       <div className='flex space-x-4'>
