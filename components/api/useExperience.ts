@@ -27,7 +27,6 @@ export const useExperiences = () => {
         const sql = neon(process.env.NEXT_PUBLIC_POSTGRES_URL_NON_POOLING!);
         const db = drizzle(sql);
         const result = await db.select().from(experiences);
-        console.log("Fetched experiences:", result);
         setExperienceList(result);
       } catch (error) {
         console.error("Error fetching experiences:", error);

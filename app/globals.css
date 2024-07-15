@@ -76,7 +76,7 @@
   }
 
   .icon-container {
-    @apply bg-black rounded-full p-1;
+    @apply bg-black rounded-full p-0.5;
     transition: transform 0.2s ease-in-out;
   }
 

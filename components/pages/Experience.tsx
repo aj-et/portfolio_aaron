@@ -24,7 +24,7 @@ const ExperiencePage = () => {
 
   return (
     <div className=''>
-      <h1 className='mb-20 text-2xl text-center'>Work Experience</h1>
+      <h1 className='mb-10 text-2xl text-center'>Work Experience</h1>
       <VerticalTimeline lineColor='#000'>
         {experienceList.map((experience) => (
           <Card_Experiences key={experience.id} experience={experience} />
