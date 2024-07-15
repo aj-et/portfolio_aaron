@@ -89,7 +89,7 @@
   }
 
   .section {
-    @apply h-screen flex items-center justify-center
+    @apply sm:h-screen flex items-center justify-center
   }
 
   .scroll-to-top-button {

@@ -2,7 +2,14 @@
 
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
-import { ContactMePage, ExperiencePage, HomePage, ProjectsPage, TechsPage } from "@/components/pages";
+import { 
+  ContactMePage,
+  ExperiencePage,
+  HomePage,
+  ProjectsPage,
+  TechsPage,
+  AboutPage
+} from "@/components/pages";
 
 export default function Home() {
   const [showButton, setShowButton] = useState(false);
@@ -34,16 +41,20 @@ export default function Home() {
         <HomePage />
       </div>
 
+      <div id="about" className="section">
+        <AboutPage />
+      </div>
+
+      <div id="experience" className="section">
+        <ExperiencePage />
+      </div>
+
       <div id="tech" className="section">
         <TechsPage />
       </div>
 
       <div id="project" className="section">
         <ProjectsPage />
-      </div>
-
-      <div id="experience" className="section">
-        <ExperiencePage />
       </div>
 
       <div id="contact" className="section">
