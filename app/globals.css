@@ -93,5 +93,5 @@
   }
 
   .scroll-to-top-button {
-    @apply fixed bottom-4 right-4 p-2 bg-blue-500 text-white rounded-full shadow-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300
+    @apply fixed bottom-[90px] right-4 p-2 bg-blue-500 text-white rounded-full shadow-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300
   }
