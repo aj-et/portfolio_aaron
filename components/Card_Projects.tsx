@@ -16,7 +16,7 @@ type Project = {
 
 const Card_Projects = ({ project }: { project: Project }) => {
   return (
-    <Card className=" w-[300px] xl:w-[400px]">
+    <Card className=" md:w-[300px] xl:w-[400px]">
         <CardContent>
             <div className="relative mt-8">
                 <div className="flex space-x-1 absolute right-0 p-1 ">
