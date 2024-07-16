@@ -1,14 +1,12 @@
 'use client'
 
-import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import { 
   ContactMePage,
   ExperiencePage,
-  HomePage,
   ProjectsPage,
   TechsPage,
-  AboutPage
+  AboutPage,
 } from "@/components/pages";
 
 export default function Home() {
@@ -37,11 +35,8 @@ export default function Home() {
 
   return (
     <div className="relative">
-      <div className="section">
-        <HomePage />
-      </div>
 
-      <div id="about" className="section">
+      <div id="about" className="section h-screen">
         <AboutPage />
       </div>
 
@@ -57,7 +52,7 @@ export default function Home() {
         <ProjectsPage />
       </div>
 
-      <div id="contact" className="section">
+      <div id="contact" className="section h-screen">
         <ContactMePage />
       </div>
 

@@ -87,7 +87,7 @@ const Card_Email = () => {
     };
 
     return (
-        <div className='flex justify-center mb-10'>
+        <div className='flex justify-center'>
             <Card className='flex flex-col w-[300px] xl:w-[400px]'>
                 <CardHeader>
                     <h2 className="text-lg font-bold">Contact Me</h2>
