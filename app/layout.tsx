@@ -4,6 +4,8 @@ import "./globals.css";
 import { Header } from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Toaster } from "@/components/ui/toaster"
+import ReCAPTCHALoader from "@/components/CookieConsent";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -21,6 +23,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <div className="border-2 border-black rounded-lg m-5 p-5">
           <Header />
+          {/* <ReCAPTCHALoader /> */}
           {children}
           <Toaster />
           {/* <Footer /> */}

@@ -11,7 +11,7 @@ import {
     typescript,
 } from '../../public/images';
 
-export const technologies = [
+const technologies = [
     {
         name: 'HTML',
         image: html,
@@ -53,3 +53,7 @@ export const technologies = [
         image: git,
     },
 ]
+
+export {
+    technologies,
+}

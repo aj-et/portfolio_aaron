@@ -5,11 +5,9 @@ import {
     Carousel,
     CarouselContent,
     CarouselItem,
-    CarouselNext,
-    CarouselPrevious,
 } from './ui/carousel';
 import Autoplay from 'embla-carousel-autoplay';
-import { technologies } from './const/image';
+import { technologies } from './const';
 
 const ShowcasePage = () => {
   return (
@@ -40,8 +38,6 @@ const ShowcasePage = () => {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
       </Carousel>
     </div>
   );

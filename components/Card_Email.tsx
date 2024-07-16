@@ -27,7 +27,7 @@ const Card_Email = () => {
     useEffect(() => {
         // Load reCAPTCHA v3 script
         const script = document.createElement('script');
-        script.src = `https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`;
+        script.src = `https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}&cookieless=1`;
         document.body.appendChild(script);
 
         return () => {
