@@ -19,9 +19,7 @@ export const Header = () => {
 
       <div className='hidden md:flex space-x-4'>
         <button onClick={() => handleSmoothScroll('about')}>About</button>
-        <button onClick={() => handleSmoothScroll('showcase')}>Showcase</button>
         <button onClick={() => handleSmoothScroll('experience')}>Experience</button>
-        <button onClick={() => handleSmoothScroll('tech')}>Tech</button>
         <button onClick={() => handleSmoothScroll('project')}>Projects</button>
         <button onClick={() => handleSmoothScroll('contact')}>Contact Me</button>
       </div>

@@ -21,7 +21,7 @@ const Card_Email = () => {
         email: '',
         message: '',
     });
-
+    const [loading, setLoading] = useState(false);
     const { toast } = useToast();
 
     useEffect(() => {
@@ -45,13 +45,10 @@ const Card_Email = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setLoading(true); // Set loading to true when the form is submitted
 
         try {
-            // Execute reCAPTCHA with action
             const token = await window.grecaptcha.execute(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY, { action: 'submit' });
-
-            // Here you would typically send the token to your backend for verification
-            // For this example, we'll assume it's valid and proceed with sending the email
 
             await emailjs.send(
                 process.env.NEXT_PUBLIC_EMAIL_JS_SERVICE_ID!,
@@ -83,6 +80,8 @@ const Card_Email = () => {
                 title: "Uh oh! Something went wrong.",
                 description: "There was a problem sending your message.",
             });
+        } finally {
+            setLoading(false); // Set loading back to false after the operation
         }
     };
 
@@ -133,9 +132,10 @@ const Card_Email = () => {
                         <div className="flex justify-center">
                             <button
                                 type="submit"
-                                className="px-4 py-2 font-semibold text-white bg-blue-500 rounded-sm hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300"
+                                disabled={loading} // Disable the button while loading
+                                className={`px-4 py-2 font-semibold text-white bg-blue-500 rounded-sm hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
                             >
-                                Send Message
+                                {loading ? 'Sending...' : 'Send Message'}
                             </button>
                         </div>
                     </form>

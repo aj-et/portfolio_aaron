@@ -2,7 +2,7 @@
 
 import React from 'react'
 // import Card_Experiences from '../Card_Experiences'
-import { useExperiences } from '../api/useExperience'
+import { useExperiences } from '../../api/useExperience'
 import Card_Experiences from '../Card_Experiences'
 import 'react-vertical-timeline-component/style.min.css'
 import dynamic from 'next/dynamic'

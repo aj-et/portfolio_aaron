@@ -56,6 +56,18 @@ export default function Home() {
         <ContactMePage />
       </div>
 
+      <iframe 
+        className="spotify"
+        title="Spotify Playlist" 
+        src={process.env.NEXT_PUBLIC_SPOTIFY_PLAYLIST_URL}
+        width="75%" 
+        height="152"
+        frameBorder="0"
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+        loading="lazy"
+      >  
+      </iframe>
+
       {showButton && (
         <button
           onClick={handleScrollToTop}
