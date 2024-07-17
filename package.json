@@ -19,6 +19,7 @@
     "@radix-ui/react-toast": "^1.2.1",
     "@uploadthing/react": "^6.6.0",
     "@vercel/postgres": "^0.8.0",
+    "@vercel/speed-insights": "^1.0.12",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "dotenv": "^16.4.5",
