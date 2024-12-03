@@ -32,6 +32,7 @@ const Card_Experiences = ({ experience }: { experience: Experience }) => {
                         src={experience.imageUrl}
                         alt={experience.employeeName}
                         className="w-[100%] h-[100%] object-contain rounded-full"
+                        loading='lazy'
                     />
                 </div>
             }
