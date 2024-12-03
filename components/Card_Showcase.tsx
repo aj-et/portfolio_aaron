@@ -31,7 +31,7 @@ const ShowcasePage = () => {
               <div className='p-1'>
                 <Card>
                   <CardContent className='flex flex-col aspect-square items-center justify-center p-6'>
-                    <Image src={tech.image} alt={tech.name} className='w-16 h-16' />
+                    <Image src={tech.image} alt={tech.name} className='w-16 h-16' loading='lazy' />
                     <span className=''>{tech.name}</span>
                   </CardContent>
                 </Card>
