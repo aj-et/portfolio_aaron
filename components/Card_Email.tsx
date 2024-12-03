@@ -25,16 +25,29 @@ const Card_Email = () => {
     const { toast } = useToast();
 
     const loadReCaptcha = async () => {
-        if (!window.grecaptcha) {
-            return new Promise((resolve, reject) => {
-                const script = document.createElement('script');
-                script.src = `https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`;
-                script.async = true;
-                script.defer = true;
-                script.onload = resolve;
-                script.onerror = reject;
-                document.head.appendChild(script);
+        try {
+            if (!window.grecaptcha) {
+                await new Promise<void>((resolve, reject) => {
+                    const script = document.createElement('script');
+                    script.src = `https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`;
+                    script.async = true;
+                    script.onload = () => resolve();
+                    script.onerror = (error) => reject(error);
+                    document.head.appendChild(script);
+                });
+            }
+    
+            // Wait for grecaptcha to be ready
+            await new Promise<void>((resolve) => {
+                if (window.grecaptcha?.ready) {
+                    window.grecaptcha.ready(() => resolve());
+                } else {
+                    resolve();
+                }
             });
+        } catch (error) {
+            console.error('Error loading reCAPTCHA:', error);
+            throw error;
         }
     };
 
@@ -51,46 +64,22 @@ const Card_Email = () => {
         setLoading(true);
     
         try {
-            // Load reCAPTCHA when form is submitted
             await loadReCaptcha();
-    
+            
             let token;
             try {
-                // Wait for reCAPTCHA to be ready
-                await new Promise((resolve, reject) => {
-                    const checkRecaptcha = () => {
-                        if (window.grecaptcha && window.grecaptcha.execute) {
-                            resolve(true);
-                        } else if (attempts > 50) { // 5 seconds timeout
-                            reject(new Error('ReCAPTCHA failed to load'));
-                        } else {
-                            setTimeout(checkRecaptcha, 100);
-                        }
-                    };
-                    let attempts = 0;
-                    checkRecaptcha();
+                token = await window.grecaptcha.execute(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY, { 
+                    action: 'email_submit' 
                 });
-    
-                // Execute reCAPTCHA and ensure we get a valid token
-                token = await window.grecaptcha.execute(
-                    process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY,
-                    { action: 'submit_form' }
-                );
-    
-                if (!token) {
-                    throw new Error('Failed to get reCAPTCHA token');
-                }
             } catch (recaptchaError) {
-                console.error('ReCAPTCHA error:', recaptchaError);
-                toast({
-                    title: "Verification Failed",
-                    description: "Please try again.",
-                });
-                setLoading(false);
-                return; // Stop the submission if reCAPTCHA fails
+                console.error('ReCAPTCHA execution failed:', recaptchaError);
+                throw new Error('Failed to verify reCAPTCHA');
             }
     
-            // Only proceed with email if we have a valid token
+            if (!token) {
+                throw new Error('No reCAPTCHA token received');
+            }
+    
             await emailjs.send(
                 process.env.NEXT_PUBLIC_EMAIL_JS_SERVICE_ID!,
                 process.env.NEXT_PUBLIC_EMAIL_JS_TEMPLATE_ID!,
@@ -116,7 +105,7 @@ const Card_Email = () => {
             });
     
         } catch (error) {
-            console.error(error);
+            console.error('Form submission error:', error);
             toast({
                 title: "Uh oh! Something went wrong.",
                 description: "There was a problem sending your message.",
