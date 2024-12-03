@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import emailjs from '@emailjs/browser';
 import {
     Card,
@@ -24,16 +24,17 @@ const Card_Email = () => {
     const [loading, setLoading] = useState(false);
     const { toast } = useToast();
 
-    useEffect(() => {
-        // Load reCAPTCHA v3 script
-        const script = document.createElement('script');
-        script.src = `https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}&cookieless=1`;
-        document.body.appendChild(script);
-
-        return () => {
-            document.body.removeChild(script);
-        };
-    }, []);
+    const loadReCaptcha = async () => {
+        if (!window.grecaptcha) {
+            // Create script only if reCAPTCHA hasn't been loaded yet
+            return new Promise((resolve) => {
+                const script = document.createElement('script');
+                script.src = `https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}&cookieless=1`;
+                script.onload = resolve;
+                document.head.appendChild(script);
+            });
+        }
+    };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -48,7 +49,26 @@ const Card_Email = () => {
         setLoading(true); // Set loading to true when the form is submitted
 
         try {
-            const token = await window.grecaptcha.execute(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY, { action: 'submit' });
+            // Load reCAPTCHA when form is submitted
+            await loadReCaptcha();
+
+            // Wait for reCAPTCHA to be ready
+            await new Promise(resolve => {
+                const checkRecaptcha = () => {
+                    if (window.grecaptcha && window.grecaptcha.execute) {
+                        resolve(true);
+                    } else {
+                        setTimeout(checkRecaptcha, 100);
+                    }
+                };
+                checkRecaptcha();
+            });
+
+            // Execute reCAPTCHA
+            const token = await window.grecaptcha.execute(
+                process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY, 
+                { action: 'submit' }
+            );
 
             await emailjs.send(
                 process.env.NEXT_PUBLIC_EMAIL_JS_SERVICE_ID!,
@@ -88,9 +108,7 @@ const Card_Email = () => {
     return (
         <div className='flex justify-center'>
             <Card className='flex flex-col w-[300px] xl:w-[400px]'>
-                <CardHeader>
-                    {/* <h2 className="text-lg font-bold">Contact Me</h2> */}
-                </CardHeader>
+                <CardHeader />
                 <CardContent>
                     <form onSubmit={handleSubmit}>
                         <div className="mb-4">

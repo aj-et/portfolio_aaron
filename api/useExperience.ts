@@ -2,9 +2,8 @@
 
 // useExperiences.ts
 import { useState, useEffect } from 'react';
-import { neon } from '@neondatabase/serverless';
-import { drizzle } from 'drizzle-orm/neon-http';
 import { experiences } from '@/drizzle/schema';
+import { useCachedQuery } from '@/utils/queryCache';
 
 type Experience = {
     id: number;
@@ -24,9 +23,7 @@ export const useExperiences = () => {
   useEffect(() => {
     const fetchExperiences = async () => {
       try {
-        const sql = neon(process.env.NEXT_PUBLIC_POSTGRES_URL_NON_POOLING!);
-        const db = drizzle(sql);
-        const result = await db.select().from(experiences);
+        const result = await useCachedQuery<Experience>('experiences', experiences);
         setExperienceList(result);
       } catch (error) {
         console.error("Error fetching experiences:", error);

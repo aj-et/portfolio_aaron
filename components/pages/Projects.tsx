@@ -2,9 +2,8 @@
 
 import React, { useEffect, useState } from 'react';
 import Card_Projects from '@/components/Card_Projects'
-import { neon } from '@neondatabase/serverless';
-import { drizzle } from 'drizzle-orm/neon-http';
 import { projects } from '@/drizzle/schema';
+import { useCachedQuery } from '@/utils/queryCache';
 
 type Project = {
   id: number;
@@ -20,9 +19,7 @@ const ProjectsPage = () => {
 
   useEffect(() => {
     const fetchProjects = async () => {
-      const sql = neon(process.env.NEXT_PUBLIC_POSTGRES_URL_NON_POOLING!);
-      const db = drizzle(sql);
-      const result = await db.select().from(projects);
+      const result = await useCachedQuery<Project>('projects', projects);
       setProjectList(result);
     };
     fetchProjects();
