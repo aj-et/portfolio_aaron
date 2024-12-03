@@ -23,7 +23,7 @@ const ShowcasePage = () => {
           align: 'start',
           loop: true,
         }}
-        className='w-[200px] md:w-[400px] lg:w-[600px] xl:w-[800px]'
+        className='w-[12.5rem] md:w-[25rem] lg:w-[37.5rem] xl:w-[50rem]'
       >
         <CarouselContent>
           {technologies.map((tech, index) => (

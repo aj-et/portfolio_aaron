@@ -23,7 +23,7 @@ const Card_Experiences = ({ experience }: { experience: Experience }) => {
         <VerticalTimelineElement
             visible={true}
             contentStyle={{ background: 'rgb(250, 250, 250)', color: '#000' }}
-            contentArrowStyle={{ borderRight: '7px solid  rgb(0, 0, 0)' }}
+            contentArrowStyle={{ borderRight: '0.438rem solid  rgb(0, 0, 0)' }}
             date={`${experience.dateStarted} - ${experience.dateEnded}`}
             iconStyle={{ background: 'rgb(250, 250, 250)'}}
             icon={
