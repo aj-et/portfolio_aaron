@@ -26,11 +26,13 @@ const Card_Email = () => {
 
     const loadReCaptcha = async () => {
         if (!window.grecaptcha) {
-            // Create script only if reCAPTCHA hasn't been loaded yet
-            return new Promise((resolve) => {
+            return new Promise((resolve, reject) => {
                 const script = document.createElement('script');
-                script.src = `https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}&cookieless=1`;
+                script.src = `https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`;
+                script.async = true;
+                script.defer = true;
                 script.onload = resolve;
+                script.onerror = reject;
                 document.head.appendChild(script);
             });
         }
@@ -46,30 +48,49 @@ const Card_Email = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setLoading(true); // Set loading to true when the form is submitted
-
+        setLoading(true);
+    
         try {
             // Load reCAPTCHA when form is submitted
             await loadReCaptcha();
-
-            // Wait for reCAPTCHA to be ready
-            await new Promise(resolve => {
-                const checkRecaptcha = () => {
-                    if (window.grecaptcha && window.grecaptcha.execute) {
-                        resolve(true);
-                    } else {
-                        setTimeout(checkRecaptcha, 100);
-                    }
-                };
-                checkRecaptcha();
-            });
-
-            // Execute reCAPTCHA
-            const token = await window.grecaptcha.execute(
-                process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY, 
-                { action: 'submit' }
-            );
-
+    
+            let token;
+            try {
+                // Wait for reCAPTCHA to be ready
+                await new Promise((resolve, reject) => {
+                    const checkRecaptcha = () => {
+                        if (window.grecaptcha && window.grecaptcha.execute) {
+                            resolve(true);
+                        } else if (attempts > 50) { // 5 seconds timeout
+                            reject(new Error('ReCAPTCHA failed to load'));
+                        } else {
+                            setTimeout(checkRecaptcha, 100);
+                        }
+                    };
+                    let attempts = 0;
+                    checkRecaptcha();
+                });
+    
+                // Execute reCAPTCHA and ensure we get a valid token
+                token = await window.grecaptcha.execute(
+                    process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY,
+                    { action: 'submit_form' }
+                );
+    
+                if (!token) {
+                    throw new Error('Failed to get reCAPTCHA token');
+                }
+            } catch (recaptchaError) {
+                console.error('ReCAPTCHA error:', recaptchaError);
+                toast({
+                    title: "Verification Failed",
+                    description: "Please try again.",
+                });
+                setLoading(false);
+                return; // Stop the submission if reCAPTCHA fails
+            }
+    
+            // Only proceed with email if we have a valid token
             await emailjs.send(
                 process.env.NEXT_PUBLIC_EMAIL_JS_SERVICE_ID!,
                 process.env.NEXT_PUBLIC_EMAIL_JS_TEMPLATE_ID!,
@@ -83,17 +104,17 @@ const Card_Email = () => {
                 },
                 process.env.NEXT_PUBLIC_EMAIL_JS_PUBLIC_KEY
             );
-
+    
             toast({
                 description: "Your message has been sent.",
             });
-
+    
             setFormState({
                 name: '',
                 email: '',
                 message: '',
             });
-
+    
         } catch (error) {
             console.error(error);
             toast({
@@ -101,7 +122,7 @@ const Card_Email = () => {
                 description: "There was a problem sending your message.",
             });
         } finally {
-            setLoading(false); // Set loading back to false after the operation
+            setLoading(false);
         }
     };
 
