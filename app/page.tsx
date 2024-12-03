@@ -56,7 +56,7 @@ export default function Home() {
         <ContactMePage />
       </div>
 
-      <iframe 
+      {/* <iframe 
         className="spotify"
         title="Spotify Playlist" 
         src={process.env.NEXT_PUBLIC_SPOTIFY_PLAYLIST_URL}
@@ -66,7 +66,7 @@ export default function Home() {
         allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
         loading="lazy"
       >  
-      </iframe>
+      </iframe> */}
 
       {showButton && (
         <button

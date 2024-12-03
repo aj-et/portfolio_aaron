@@ -6,7 +6,7 @@ import {
     CarouselContent,
     CarouselItem,
 } from './ui/carousel';
-import Autoplay from 'embla-carousel-autoplay';
+import AutoScroll from 'embla-carousel-auto-scroll';
 import { technologies } from './const';
 
 const ShowcasePage = () => {
@@ -14,8 +14,9 @@ const ShowcasePage = () => {
     <div className='flex flex-col justify-center'>
       <Carousel
         plugins={[
-          Autoplay({
-            delay: 2000,
+          AutoScroll({
+            speed: 1.5,
+            stopOnInteraction: false,
           })
         ]}
         opts={{

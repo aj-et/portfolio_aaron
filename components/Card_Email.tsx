@@ -89,7 +89,7 @@ const Card_Email = () => {
         <div className='flex justify-center'>
             <Card className='flex flex-col w-[300px] xl:w-[400px]'>
                 <CardHeader>
-                    <h2 className="text-lg font-bold">Contact Me</h2>
+                    {/* <h2 className="text-lg font-bold">Contact Me</h2> */}
                 </CardHeader>
                 <CardContent>
                     <form onSubmit={handleSubmit}>
