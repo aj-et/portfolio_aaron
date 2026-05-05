@@ -3,6 +3,12 @@
 import React, { useRef, useState } from 'react'
 import Image from 'next/image'
 import type { StaticImageData } from 'next/image'
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from './ui/carousel'
+import AutoScroll from 'embla-carousel-auto-scroll'
 import { technologies } from './const'
 
 type Tech = { name: string; image: string | StaticImageData }
@@ -29,16 +35,17 @@ const SpotlightCard = ({ name, image }: Tech) => {
         position: 'relative',
         overflow: 'hidden',
         background: '#111114',
-        border: '1px solid #1e1e22',
+        border: `1px solid ${hovered ? 'rgba(74,255,139,0.25)' : '#1e1e22'}`,
         borderRadius: '14px',
-        padding: '20px 12px',
+        padding: '24px 16px',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        justifyContent: 'center',
         gap: '10px',
         cursor: 'default',
         transition: 'border-color 0.3s',
-        borderColor: hovered ? 'rgba(74,255,139,0.25)' : '#1e1e22',
+        aspectRatio: '1',
       }}
     >
       <div
@@ -49,18 +56,17 @@ const SpotlightCard = ({ name, image }: Tech) => {
           opacity: hovered ? 1 : 0,
           transition: 'opacity 0.3s',
           pointerEvents: 'none',
-          borderRadius: '14px',
         }}
       />
       <Image
         src={image}
         alt={name}
-        width={44}
-        height={44}
+        width={48}
+        height={48}
         loading='lazy'
-        style={{ objectFit: 'contain' }}
+        style={{ objectFit: 'contain', position: 'relative', zIndex: 1 }}
       />
-      <span style={{ fontSize: '11px', color: 'rgba(234,231,226,0.55)', letterSpacing: '0.05em' }}>
+      <span style={{ fontSize: '11px', color: 'rgba(234,231,226,0.55)', letterSpacing: '0.05em', position: 'relative', zIndex: 1 }}>
         {name}
       </span>
     </div>
@@ -69,19 +75,30 @@ const SpotlightCard = ({ name, image }: Tech) => {
 
 const ShowcasePage = () => {
   return (
-    <div
-      style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(90px, 1fr))',
-        gap: '8px',
-        maxWidth: '580px',
-        margin: '0 auto',
-        width: '100%',
-      }}
-    >
-      {technologies.map((tech, index) => (
-        <SpotlightCard key={index} name={tech.name} image={tech.image} />
-      ))}
+    <div className='flex flex-col justify-center'>
+      <Carousel
+        plugins={[
+          AutoScroll({
+            speed: 1.5,
+            stopOnInteraction: false,
+          })
+        ]}
+        opts={{
+          align: 'start',
+          loop: true,
+        }}
+        className='w-[12.5rem] md:w-[25rem] lg:w-[37.5rem] xl:w-[50rem]'
+      >
+        <CarouselContent>
+          {technologies.map((tech, index) => (
+            <CarouselItem key={index} className='md:basis-1/3 lg:basis-1/4 xl:basis-1/5'>
+              <div className='p-1'>
+                <SpotlightCard name={tech.name} image={tech.image} />
+              </div>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+      </Carousel>
     </div>
   )
 }
