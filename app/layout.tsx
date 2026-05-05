@@ -26,8 +26,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} ${jetbrainsMono.variable}`}>
         <MeshGradient />
-        <div className="relative z-10 p-5">
+        <header style={{ position: 'sticky', top: 0, zIndex: 50, background: 'transparent' }}>
           <Header />
+        </header>
+        <div className="relative z-10 p-5">
           {children}
           <Toaster />
           <SpeedInsights />

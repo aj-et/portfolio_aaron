@@ -24,7 +24,10 @@ export const useExperiences = () => {
     const fetchExperiences = async () => {
       try {
         const result = await useCachedQuery<Experience>('experiences', experiences);
-        setExperienceList(result);
+        const sorted = [...result].sort(
+          (a, b) => new Date(b.dateStarted).getTime() - new Date(a.dateStarted).getTime()
+        );
+        setExperienceList(sorted);
       } catch (error) {
         console.error("Error fetching experiences:", error);
       }
