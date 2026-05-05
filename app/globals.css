@@ -1,133 +1,111 @@
 @tailwind base;
-  @tailwind components;
-  @tailwind utilities;
+@tailwind components;
+@tailwind utilities;
 
-  @layer base {
-    :root {
-      --background: 0 0% 100%;
-      --foreground: 222.2 84% 4.9%;
+@layer base {
+  :root {
+    --background: 240 5% 4%;
+    --foreground: 36 16% 90%;
 
-      --card: 0 0% 100%;
-      --card-foreground: 222.2 84% 4.9%;
+    --card: 240 8% 7%;
+    --card-foreground: 36 16% 90%;
 
-      --popover: 0 0% 100%;
-      --popover-foreground: 222.2 84% 4.9%;
+    --popover: 240 8% 7%;
+    --popover-foreground: 36 16% 90%;
 
-      --primary: 222.2 47.4% 11.2%;
-      --primary-foreground: 210 40% 98%;
+    --primary: 36 16% 90%;
+    --primary-foreground: 240 5% 4%;
 
-      --secondary: 210 40% 96.1%;
-      --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 240 6% 13%;
+    --secondary-foreground: 36 16% 90%;
 
-      --muted: 210 40% 96.1%;
-      --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 240 8% 7%;
+    --muted-foreground: 240 2% 36%;
 
-      --accent: 210 40% 96.1%;
-      --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 143 100% 65%;
+    --accent-foreground: 240 5% 4%;
 
-      --destructive: 0 84.2% 60.2%;
-      --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 36 16% 90%;
 
-      --border: 214.3 31.8% 91.4%;
-      --input: 214.3 31.8% 91.4%;
-      --ring: 222.2 84% 4.9%;
+    --border: 240 6% 13%;
+    --input: 240 6% 13%;
+    --ring: 143 100% 65%;
 
-      --radius: 0.5rem;
-    }
-
-    .dark {
-      --background: 222.2 84% 4.9%;
-      --foreground: 210 40% 98%;
-
-      --card: 222.2 84% 4.9%;
-      --card-foreground: 210 40% 98%;
-
-      --popover: 222.2 84% 4.9%;
-      --popover-foreground: 210 40% 98%;
-
-      --primary: 210 40% 98%;
-      --primary-foreground: 222.2 47.4% 11.2%;
-
-      --secondary: 217.2 32.6% 17.5%;
-      --secondary-foreground: 210 40% 98%;
-
-      --muted: 217.2 32.6% 17.5%;
-      --muted-foreground: 215 20.2% 65.1%;
-
-      --accent: 217.2 32.6% 17.5%;
-      --accent-foreground: 210 40% 98%;
-
-      --destructive: 0 62.8% 30.6%;
-      --destructive-foreground: 210 40% 98%;
-
-      --border: 217.2 32.6% 17.5%;
-      --input: 217.2 32.6% 17.5%;
-      --ring: 212.7 26.8% 83.9%;
-    }
+    --radius: 0.5rem;
   }
+}
 
-  @layer base {
-    * {
-      @apply border-border;
-    }
-    body {
-      @apply bg-background text-foreground;
-    }
+@layer base {
+  * {
+    @apply border-border;
   }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
 
-  .icon-container {
-    @apply bg-black rounded-full p-0.5;
-    transition: transform 0.2s ease-in-out;
-  }
+.icon-container {
+  @apply bg-[#1e1e22] rounded-full p-0.5;
+  transition: transform 0.2s ease-in-out;
+}
 
-  .icon-container:hover {
-    transform: scale(1.2);
-  }
+.icon-container:hover {
+  transform: scale(1.2);
+}
 
-  .card-email_input {
-    @apply mt-1 block w-full border border-gray-300 rounded-sm shadow-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300 p-1
-  }
+.card-email_input {
+  @apply mt-1 block w-full border border-[#1e1e22] bg-[#111114] text-[#eae7e2] rounded-sm shadow-sm focus:outline-none focus:border-[#4aff8b] focus:ring-2 p-1;
+  --tw-ring-color: rgba(74, 255, 139, 0.2);
+}
 
-  .section {
-    @apply py-10 my-2 flex items-center justify-center
-  }
+.section {
+  @apply py-10 my-2 flex items-center justify-center;
+}
 
-  .scroll-to-top-button {
-    @apply fixed bottom-[90px] right-8 p-2 bg-blue-500 text-white rounded-full shadow-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300
-  }
+.scroll-to-top-button {
+  @apply fixed bottom-[90px] right-8 p-2 rounded-full shadow-md focus:outline-none;
+  background: #4aff8b;
+  color: #0a0a0b;
+  font-weight: 600;
+}
 
-  .spotify {
-    @apply fixed bottom-2 left-8 hidden lg:block lg:w-[25%]
-  }
+.scroll-to-top-button:hover {
+  background: #3ae07a;
+}
 
-  .embla {
-    max-width: 48rem;
-    margin: auto;
-    --slide-height: 19rem;
-    --slide-spacing: 1rem;
-    --slide-size: 100%;
-  }
-  .embla__viewport {
-    overflow: hidden;
-  }
-  .embla__container {
-    backface-visibility: hidden;
-    display: flex;
-    touch-action: pan-y pinch-zoom;
-    margin-left: calc(var(--slide-spacing) * -1);
-  }
-  .embla__slide {
-    flex: 0 0 var(--slide-size);
-    min-width: 0;
-    padding-left: var(--slide-spacing);
-  }
-  .embla__slide__number {
-    box-shadow: inset 0 0 0 0.2rem var(--detail-medium-contrast);
-    border-radius: 1.8rem;
-    font-size: 4rem;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: var(--slide-height);
-  }
+.spotify {
+  @apply fixed bottom-2 left-8 hidden lg:block lg:w-[25%];
+}
+
+.embla {
+  max-width: 48rem;
+  margin: auto;
+  --slide-height: 19rem;
+  --slide-spacing: 1rem;
+  --slide-size: 100%;
+}
+.embla__viewport {
+  overflow: hidden;
+}
+.embla__container {
+  backface-visibility: hidden;
+  display: flex;
+  touch-action: pan-y pinch-zoom;
+  margin-left: calc(var(--slide-spacing) * -1);
+}
+.embla__slide {
+  flex: 0 0 var(--slide-size);
+  min-width: 0;
+  padding-left: var(--slide-spacing);
+}
+.embla__slide__number {
+  box-shadow: inset 0 0 0 0.2rem var(--detail-medium-contrast);
+  border-radius: 1.8rem;
+  font-size: 4rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--slide-height);
+}
