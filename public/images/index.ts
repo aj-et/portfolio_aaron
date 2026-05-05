@@ -8,6 +8,18 @@ import nodejs from './nodejs.png'
 import reactjs from './reactjs.png'
 import tailwind from './tailwind.png'
 import typescript from './typescript.png'
+import claude from './claude-color.svg'
+import openai from './openai.svg'
+import perplexity from './perplexity-color.svg'
+import grok from './grok.svg'
+import claudecode from './claudecode-color.svg'
+import codex from './codex-color.svg'
+import cursor from './cursor.svg'
+import openclaw from './openclaw-color.svg'
+import vercel from './vercel.svg'
+import lovable from './lovable-color.svg'
+import replit from './replit-color.svg'
 
 
-export { css, html, figma, git, javascript, mongodb, nodejs, reactjs, tailwind, typescript }
+
+export { css, html, figma, git, javascript, mongodb, nodejs, reactjs, tailwind, typescript, claude, openai, perplexity, grok, claudecode, codex, cursor, openclaw, vercel, lovable, replit }

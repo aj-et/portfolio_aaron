@@ -75,7 +75,7 @@ const SpotlightCard = ({ name, image }: Tech) => {
 
 const ShowcasePage = () => {
   return (
-    <div className='flex flex-col justify-center'>
+    <div className='w-full flex flex-col justify-center'>
       <Carousel
         plugins={[
           AutoScroll({
@@ -87,11 +87,11 @@ const ShowcasePage = () => {
           align: 'start',
           loop: true,
         }}
-        className='w-[12.5rem] md:w-[25rem] lg:w-[37.5rem] xl:w-[50rem]'
+        className='w-full'
       >
         <CarouselContent>
           {technologies.map((tech, index) => (
-            <CarouselItem key={index} className='md:basis-1/3 lg:basis-1/4 xl:basis-1/5'>
+            <CarouselItem key={index} className='basis-[160px] shrink-0'>
               <div className='p-1'>
                 <SpotlightCard name={tech.name} image={tech.image} />
               </div>
