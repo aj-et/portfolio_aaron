@@ -84,38 +84,42 @@ const Card_Projects = ({ project }: { project: Project }) => {
             {project.description}
           </p>
           <div style={{ display: 'flex', gap: '10px' }}>
-            <a
-              href={project.html_link}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                color: '#4aff8b',
-                fontSize: '13px',
-                textDecoration: 'none',
-                border: '1px solid rgba(74,255,139,0.35)',
-                padding: '6px 14px',
-                borderRadius: '8px',
-                fontWeight: 500,
-              }}
-            >
-              Live ↗
-            </a>
-            <a
-              href={project.github_link}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                color: '#eae7e2',
-                fontSize: '13px',
-                textDecoration: 'none',
-                border: '1px solid #1e1e22',
-                padding: '6px 14px',
-                borderRadius: '8px',
-                fontWeight: 500,
-              }}
-            >
-              GitHub ↗
-            </a>
+            {project.html_link && (
+              <a
+                href={project.html_link}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  color: '#4aff8b',
+                  fontSize: '13px',
+                  textDecoration: 'none',
+                  border: '1px solid rgba(74,255,139,0.35)',
+                  padding: '6px 14px',
+                  borderRadius: '8px',
+                  fontWeight: 500,
+                }}
+              >
+                Live ↗
+              </a>
+            )}
+            {project.github_link && (
+              <a
+                href={project.github_link}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  color: '#eae7e2',
+                  fontSize: '13px',
+                  textDecoration: 'none',
+                  border: '1px solid #1e1e22',
+                  padding: '6px 14px',
+                  borderRadius: '8px',
+                  fontWeight: 500,
+                }}
+              >
+                GitHub ↗
+              </a>
+            )}
           </div>
         </div>
       </div>
