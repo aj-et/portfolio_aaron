@@ -20,7 +20,7 @@ const ProjectsPage = () => {
   useEffect(() => {
     const fetchProjects = async () => {
       const result = await useCachedQuery<Project>('projects', projects);
-      setProjectList(result);
+      setProjectList([...result].sort((a, b) => b.id - a.id));
     };
     fetchProjects();
   }, [])
