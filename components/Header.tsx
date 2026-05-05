@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 
 const NAV_ITEMS = [
@@ -11,13 +11,29 @@ const NAV_ITEMS = [
 ]
 
 export const Header = () => {
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
   const handleSmoothScroll = (id: string) => {
     const element = document.getElementById(id)
     if (element) element.scrollIntoView({ behavior: 'smooth' })
   }
 
   return (
-    <div className='flex flex-col md:flex-row justify-between mb-20'>
+    <div
+      className='flex flex-col md:flex-row justify-between'
+      style={{
+        padding: '16px 20px',
+        background: scrolled ? 'rgba(9,9,11,0.5)' : 'transparent',
+        backdropFilter: scrolled ? 'blur(12px)' : 'none',
+        transition: 'background 0.3s ease, backdrop-filter 0.3s ease',
+      }}
+    >
       <Link
         href={'/'}
         style={{
