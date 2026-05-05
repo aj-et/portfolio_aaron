@@ -1,36 +1,140 @@
-import {
-    Card,
-    CardContent,
-    CardFooter,
-} from "@/components/ui/card"
-import Image from "next/image"
+'use client'
+
+import { useState } from 'react'
+import Image from 'next/image'
 
 type Project = {
-    id: number;
-    name: string;
-    description: string;
-    image: string;
-    html_link: string;
-    github_link: string;
-};
+  id: number
+  name: string
+  description: string
+  image: string
+  html_link: string
+  github_link: string
+}
 
 const Card_Projects = ({ project }: { project: Project }) => {
+  const [flipped, setFlipped] = useState(false)
+
   return (
-    <Card className=" md:w-[300px] xl:w-[400px]">
-        <CardContent>
-            <div className="relative mt-8">
-                <div className="flex space-x-1 absolute right-0 p-1 ">
-                    <a target="_blank" href={project.html_link} className="icon-container"><Image src={"/images/chrome.png"} alt="Chrome Icon" width={28} height={28} /></a>
-                    <a target="_blank" href={project.github_link} className="icon-container"><Image src={"/images/github.png"} alt="Github Icon" width={28} height={28} /></a>
-                </div>
-                <Image src={project.image} alt="Project Image" width={400} height={400} loading="lazy"/>
-                <div className="flex flex-col mt-5">
-                    <h2 className="text-lg font-bold mb-2">{project.name}</h2>
-                    <p>{project.description}</p>
-                </div>
-            </div>
-        </CardContent>
-    </Card>
+    <div
+      style={{ perspective: '800px', height: '320px', width: '280px', cursor: 'pointer', flexShrink: 0 }}
+      onMouseEnter={() => setFlipped(true)}
+      onMouseLeave={() => setFlipped(false)}
+    >
+      <div
+        style={{
+          position: 'relative',
+          width: '100%',
+          height: '100%',
+          transition: 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
+          transformStyle: 'preserve-3d',
+          transform: flipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
+        }}
+      >
+        {/* Front */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            backfaceVisibility: 'hidden',
+            WebkitBackfaceVisibility: 'hidden',
+            borderRadius: '20px',
+            overflow: 'hidden',
+            background: '#111114',
+            border: '1px solid #1e1e22',
+          }}
+        >
+          <div style={{ position: 'relative', width: '100%', height: '65%' }}>
+            <Image
+              src={project.image}
+              alt={project.name}
+              fill
+              style={{ objectFit: 'cover', opacity: 0.8 }}
+              sizes="280px"
+              loading="lazy"
+            />
+            <div
+              style={{
+                position: 'absolute',
+                inset: 0,
+                background: 'linear-gradient(to bottom, transparent 40%, #111114 100%)',
+              }}
+            />
+          </div>
+          <div style={{ padding: '14px 20px' }}>
+            <h3 style={{ color: '#eae7e2', fontWeight: 600, fontSize: '16px', marginBottom: '4px' }}>
+              {project.name}
+            </h3>
+            <p style={{ color: '#5a5a5e', fontSize: '12px', letterSpacing: '0.04em' }}>
+              Hover to see details
+            </p>
+          </div>
+        </div>
+
+        {/* Back */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            backfaceVisibility: 'hidden',
+            WebkitBackfaceVisibility: 'hidden',
+            transform: 'rotateY(180deg)',
+            borderRadius: '20px',
+            background: '#0d1a0f',
+            border: '1px solid rgba(74,255,139,0.25)',
+            padding: '28px',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+          }}
+        >
+          <div>
+            <h3 style={{ color: '#4aff8b', fontWeight: 600, fontSize: '17px', marginBottom: '10px' }}>
+              {project.name}
+            </h3>
+            <p style={{ color: 'rgba(234,231,226,0.8)', fontSize: '13px', lineHeight: 1.65 }}>
+              {project.description}
+            </p>
+          </div>
+          <div style={{ display: 'flex', gap: '10px' }}>
+            <a
+              href={project.html_link}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              style={{
+                color: '#4aff8b',
+                fontSize: '13px',
+                textDecoration: 'none',
+                border: '1px solid rgba(74,255,139,0.35)',
+                padding: '6px 14px',
+                borderRadius: '8px',
+                fontWeight: 500,
+              }}
+            >
+              Live ↗
+            </a>
+            <a
+              href={project.github_link}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              style={{
+                color: '#eae7e2',
+                fontSize: '13px',
+                textDecoration: 'none',
+                border: '1px solid #1e1e22',
+                padding: '6px 14px',
+                borderRadius: '8px',
+                fontWeight: 500,
+              }}
+            >
+              GitHub ↗
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }
 
