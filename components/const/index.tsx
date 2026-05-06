@@ -19,7 +19,9 @@ import {
     openclaw, 
     vercel, 
     lovable, 
-    replit
+    replit,
+    sql,
+    python
 } from '../../public/images';
 
 const technologies = [
@@ -38,6 +40,14 @@ const technologies = [
     {
         name: 'TypeScript',
         image: typescript,
+    },
+    {
+        name: 'Python',
+        image: python,
+    },
+    {
+        name: 'SQL',
+        image: sql,
     },
     {
         name: 'React',
