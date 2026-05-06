@@ -60,7 +60,7 @@ components/
   const/
     index.tsx           # `technologies` array (name + image) for the Techs section
   ui/                   # Shadcn UI primitives (toast, button, card, carousel)
-api/
+hooks/
   useExperience.ts      # `useExperiences` hook — fetches from /api/experiences
 drizzle/
   schema.ts             # `projects` and `experiences` table definitions

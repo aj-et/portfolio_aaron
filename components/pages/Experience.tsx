@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { useExperiences } from '../../api/useExperience'
+import { useExperiences } from '../../hooks/useExperience'
 
 const ExperiencePage = () => {
   const experienceList = useExperiences()
