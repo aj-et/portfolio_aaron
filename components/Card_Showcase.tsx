@@ -1,106 +1,64 @@
 'use client'
 
-import React, { useRef, useState } from 'react'
 import Image from 'next/image'
 import type { StaticImageData } from 'next/image'
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-} from './ui/carousel'
-import AutoScroll from 'embla-carousel-auto-scroll'
+import { Stagger, StaggerItem } from './Reveal'
 import { technologies } from './const'
 
 type Tech = { name: string; image: string | StaticImageData }
 
-const SpotlightCard = ({ name, image }: Tech) => {
-  const cardRef = useRef<HTMLDivElement>(null)
-  const [hovered, setHovered] = useState(false)
-  const [pos, setPos] = useState({ x: '50%', y: '50%' })
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    const card = cardRef.current
-    if (!card) return
-    const rect = card.getBoundingClientRect()
-    setPos({ x: `${e.clientX - rect.left}px`, y: `${e.clientY - rect.top}px` })
-  }
-
-  return (
+const ShowcasePage = () => (
+  <div className="w-full">
+    {/* Marquee */}
     <div
-      ref={cardRef}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      className="relative overflow-hidden mb-10"
       style={{
-        position: 'relative',
-        overflow: 'hidden',
-        background: '#111114',
-        border: `1px solid ${hovered ? 'rgba(74,255,139,0.25)' : '#1e1e22'}`,
-        borderRadius: '14px',
-        padding: '24px 16px',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: '10px',
-        cursor: 'default',
-        transition: 'border-color 0.3s',
-        aspectRatio: '1',
+        maskImage: 'linear-gradient(90deg, transparent, black 10%, black 90%, transparent)',
+        WebkitMaskImage: 'linear-gradient(90deg, transparent, black 10%, black 90%, transparent)',
       }}
     >
-      <div
-        style={{
-          position: 'absolute',
-          inset: 0,
-          background: `radial-gradient(circle 130px at ${pos.x} ${pos.y}, rgba(255,255,255,0.055), transparent)`,
-          opacity: hovered ? 1 : 0,
-          transition: 'opacity 0.3s',
-          pointerEvents: 'none',
-        }}
-      />
-      <Image
-        src={image}
-        alt={name}
-        width={48}
-        height={48}
-        loading='lazy'
-        style={{ objectFit: 'contain', position: 'relative', zIndex: 1 }}
-      />
-      <span style={{ fontSize: '11px', color: 'rgba(234,231,226,0.55)', letterSpacing: '0.05em', position: 'relative', zIndex: 1 }}>
-        {name}
-      </span>
+      <div className="flex gap-4 animate-marquee w-max">
+        {[...technologies, ...technologies].map((t: Tech, i) => (
+          <span
+            key={i}
+            className="glass px-5 py-2.5 rounded-full font-mono text-sm whitespace-nowrap text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors flex items-center gap-2"
+          >
+            <Image
+              src={t.image}
+              alt={t.name}
+              width={16}
+              height={16}
+              className="object-contain"
+            />
+            {t.name}
+          </span>
+        ))}
+      </div>
     </div>
-  )
-}
 
-const ShowcasePage = () => {
-  return (
-    <div className='w-full flex flex-col justify-center'>
-      <Carousel
-        plugins={[
-          AutoScroll({
-            speed: 1.5,
-            stopOnInteraction: false,
-          })
-        ]}
-        opts={{
-          align: 'start',
-          loop: true,
-        }}
-        className='w-full'
-      >
-        <CarouselContent>
-          {technologies.map((tech, index) => (
-            <CarouselItem key={index} className='basis-[160px] shrink-0'>
-              <div className='p-1'>
-                <SpotlightCard name={tech.name} image={tech.image} />
-              </div>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-      </Carousel>
-    </div>
-  )
-}
+    {/* Static grid with icons */}
+    <Stagger
+      className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-7 gap-3"
+      stagger={0.03}
+      amount={0.05}
+    >
+      {technologies.map((t: Tech) => (
+        <StaggerItem
+          key={t.name}
+          className="glass glow-border rounded-md px-3 py-3 text-center font-mono text-xs text-muted-foreground hover:text-primary transition-colors cursor-default flex flex-col items-center gap-2"
+        >
+          <Image
+            src={t.image}
+            alt={t.name}
+            width={24}
+            height={24}
+            className="object-contain"
+          />
+          {t.name}
+        </StaggerItem>
+      ))}
+    </Stagger>
+  </div>
+)
 
 export default ShowcasePage

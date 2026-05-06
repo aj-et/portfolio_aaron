@@ -1,76 +1,72 @@
 'use client'
 
-import React from 'react'
+import { useState } from 'react'
 import { useExperiences } from '../../hooks/useExperience'
+import SectionWrapper from '@/components/SectionWrapper'
 
 const ExperiencePage = () => {
-  const experienceList = useExperiences()
+  const jobs = useExperiences()
+  const [active, setActive] = useState(0)
+  const job = jobs[active]
+
+  if (!job) {
+    return (
+      <SectionWrapper id="experience" num="02" title="where_I've_worked">
+        <p className="text-muted-foreground font-mono text-sm">Loading...</p>
+      </SectionWrapper>
+    )
+  }
 
   return (
-    <div style={{ width: '100%', maxWidth: '640px', margin: '0 auto', padding: '0 24px' }}>
-      <h1
-        className='mb-10 text-2xl text-center'
-        style={{ fontFamily: 'var(--font-mono), monospace' }}
-      >
-        Work Experience
-      </h1>
+    <SectionWrapper id="experience" num="02" title="where_I've_worked">
+      <div className="grid md:grid-cols-[200px_1fr] gap-8">
+        {/* Tabs */}
+        <div className="flex md:flex-col overflow-x-auto md:overflow-visible border-b md:border-b-0 md:border-l border-border">
+          {jobs.map((j, i) => (
+            <button
+              key={j.id}
+              onClick={() => setActive(i)}
+              className={`whitespace-nowrap text-left px-4 py-3 font-mono text-sm transition-all border-b-2 md:border-b-0 md:border-l-2 -mb-px md:-ml-px ${
+                active === i
+                  ? 'border-primary text-primary bg-primary/5'
+                  : 'border-transparent text-muted-foreground hover:text-primary hover:bg-primary/5'
+              }`}
+            >
+              {j.employeeName.length > 16 ? j.employeeName.slice(0, 14) + '…' : j.employeeName}
+            </button>
+          ))}
+        </div>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-        {experienceList.map((exp) => (
-          <div
-            key={exp.id}
-            style={{
-              background: '#111114',
-              border: '1px solid #1e1e22',
-              borderRadius: '16px',
-              padding: '28px',
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-              <img
-                src={exp.imageUrl}
-                alt={exp.employeeName}
-                style={{
-                  width: '48px',
-                  height: '48px',
-                  objectFit: 'contain',
-                  borderRadius: '50%',
-                  background: '#1e1e22',
-                  padding: '6px',
-                  flexShrink: 0,
-                }}
-              />
-              <div>
-                <p style={{ color: '#4aff8b', fontWeight: 600, fontSize: '15px' }}>
-                  {exp.employeeName}
-                </p>
-                <p style={{
-                  color: '#5a5a5e',
-                  fontSize: '12px',
-                  marginTop: '2px',
-                  fontFamily: 'var(--font-mono), monospace',
-                }}>
-                  {exp.dateStarted} – {exp.dateEnded}
-                </p>
-              </div>
+        {/* Detail */}
+        <div key={active} className="animate-fade-in-left">
+          <div className="flex items-center gap-4 mb-4">
+            <img
+              src={job.imageUrl}
+              alt={job.employeeName}
+              className="w-10 h-10 rounded-md object-contain bg-muted p-1.5 shrink-0"
+            />
+            <div>
+              <h3 className="text-xl md:text-2xl font-semibold">
+                {job.positionName}{' '}
+                <span className="text-primary">@ {job.employeeName}</span>
+              </h3>
+              <p className="font-mono text-sm text-muted-foreground mt-0.5">
+                {job.dateStarted} – {job.dateEnded}
+              </p>
             </div>
-
-            <h3 style={{ color: '#eae7e2', fontWeight: 600, fontSize: '18px', marginBottom: '16px' }}>
-              {exp.positionName}
-            </h3>
-
-            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              {[exp.description1, exp.description2, exp.description3].filter(Boolean).map((desc, j) => (
-                <li key={j} style={{ display: 'flex', gap: '10px', fontSize: '14px', color: 'rgba(234,231,226,0.75)', lineHeight: 1.55 }}>
-                  <span style={{ color: '#4aff8b', flexShrink: 0, marginTop: '2px' }}>▸</span>
-                  {desc}
-                </li>
-              ))}
-            </ul>
           </div>
-        ))}
+
+          <ul className="space-y-3 mt-5">
+            {[job.description1, job.description2, job.description3].filter(Boolean).map((b, i) => (
+              <li key={i} className="flex gap-3 text-muted-foreground leading-relaxed">
+                <span className="text-primary font-mono mt-1">▸</span>
+                <span>{b}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
-    </div>
+    </SectionWrapper>
   )
 }
 
