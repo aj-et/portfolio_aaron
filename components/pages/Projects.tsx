@@ -3,8 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Card_Projects from '@/components/Card_Projects'
 import CoverflowCarousel from '@/components/CoverflowCarousel'
-import { projects } from '@/drizzle/schema';
-import { useCachedQuery } from '@/utils/queryCache';
+import { cachedFetch } from '@/utils/queryCache';
 
 type Project = {
   id: number;
@@ -19,18 +18,16 @@ const ProjectsPage = () => {
   const [projectList, setProjectList] = useState<Project[]>([]);
 
   useEffect(() => {
-    const fetchProjects = async () => {
-      const result = await useCachedQuery<Project>('projects', projects);
-      setProjectList([...result].sort((a, b) => b.id - a.id));
-    };
-    fetchProjects();
+    cachedFetch<Project>('projects', '/api/projects')
+      .then(result => setProjectList([...result].sort((a, b) => b.id - a.id)))
+      .catch(console.error)
   }, [])
 
   return (
     <div className='flex flex-col justify-center'>
       <h1 className='mb-10 text-2xl text-center'>Projects</h1>
 
-      {/* Mobile: 3D coverflow carousel */}
+      {/* Mobile: carousel */}
       <div className='md:hidden'>
         <CoverflowCarousel projects={projectList} />
       </div>
