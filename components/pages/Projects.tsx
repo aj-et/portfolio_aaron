@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Card_Projects from '@/components/Card_Projects'
+import CoverflowCarousel from '@/components/CoverflowCarousel'
 import { projects } from '@/drizzle/schema';
 import { useCachedQuery } from '@/utils/queryCache';
 
@@ -28,7 +29,14 @@ const ProjectsPage = () => {
   return (
     <div className='flex flex-col justify-center'>
       <h1 className='mb-10 text-2xl text-center'>Projects</h1>
-      <div className='flex gap-4 flex-wrap justify-center'>
+
+      {/* Mobile: 3D coverflow carousel */}
+      <div className='md:hidden'>
+        <CoverflowCarousel projects={projectList} />
+      </div>
+
+      {/* Desktop: flex-wrap grid */}
+      <div className='hidden md:flex gap-4 flex-wrap justify-center'>
         {projectList.map((project) => (
           <Card_Projects key={project.id} project={project} />
         ))}

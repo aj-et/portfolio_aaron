@@ -63,17 +63,6 @@
   @apply py-10 my-2 flex items-center justify-center;
 }
 
-.scroll-to-top-button {
-  @apply fixed bottom-[90px] right-8 p-2 rounded-full shadow-md focus:outline-none md:hidden;
-  background: #4aff8b;
-  color: #0a0a0b;
-  font-weight: 600;
-}
-
-.scroll-to-top-button:hover {
-  background: #3ae07a;
-}
-
 .spotify {
   @apply fixed bottom-2 left-8 hidden lg:block lg:w-[25%];
 }
