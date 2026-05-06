@@ -8,8 +8,11 @@ Personal portfolio built with Next.js, showcasing projects, work experience, and
 - **React 19** — latest with concurrent features
 - **TypeScript 6** — strict mode
 - **Tailwind CSS 4** — utility-first styling (CSS-first config)
+- **Framer Motion** — page and scroll animations
+- **GSAP** — imperative animation sequences
 - **Neon + Drizzle ORM** — serverless Postgres for projects and experience data
 - **EmailJS** — contact form without a backend
+- **reCAPTCHA v2** — spam protection on the contact form
 - **Vercel** — hosting and deployment
 
 ## Getting Started
@@ -52,6 +55,7 @@ npm run studio     # open Drizzle Studio to browse/edit data
 
 | Section | Description |
 |---------|-------------|
+| Hero | Animated landing intro with name, title, and CTA |
 | About | Intro, social links, tech stack carousel |
 | Experience | Work history rendered as a vertical timeline |
 | Projects | Card grid (desktop) / swipeable slide carousel (mobile) |

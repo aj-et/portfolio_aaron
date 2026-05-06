@@ -9,7 +9,7 @@
 - **Email:** EmailJS (`@emailjs/browser`)
 - **Carousel:** Embla Carousel (tech stack auto-scroll in Techs section)
 - **Timeline:** `react-vertical-timeline-component` (Experience section)
-- **Animations:** GSAP, CSS keyframes
+- **Animations:** Framer Motion, GSAP, CSS keyframes
 - **Deployment:** Vercel
 
 ## Commands
@@ -48,23 +48,36 @@ app/
     experiences/route.ts # GET /api/experiences — server-side DB query
 components/
   Header.tsx            # Sticky nav — desktop links + mobile hamburger menu
+  Hero.tsx              # Landing hero section (animated intro, CTA)
   Card_Projects.tsx     # Desktop project card (gradient border, 3D tilt on hover)
+  Card_Email.tsx        # Email/contact card used in ContactMe section
+  Card_Showcase.tsx     # Project showcase card variant
   CoverflowCarousel.tsx # Mobile project carousel (slide animation, swipe + arrow nav)
   MeshGradient.tsx      # Animated background mesh
+  Reveal.tsx            # Scroll-triggered reveal animation wrapper
+  SectionWrapper.tsx    # Common section layout wrapper (padding, id, ref)
   pages/
+    index.tsx           # Re-export barrel for all page components
     About.tsx
     Experience.tsx
     Projects.tsx        # CoverflowCarousel on mobile, card grid on desktop
     Techs.tsx
     ContactMe.tsx
   const/
-    index.tsx           # `technologies` array (name + image) for the Techs section
-  ui/                   # Shadcn UI primitives (toast, button, card, carousel)
+    index.tsx           # `technologies` array — 23 entries: Languages (HTML, CSS, JS, TS, Python, SQL), Frontend (React, Tailwind), Backend/Tools (Node.js, MongoDB, Figma, Git), AI Tools (Claude, OpenAI, Perplexity, Grok), Code Editors (ClaudeCode, CodeX, Cursor, OpenClaw), Deployment (Vercel, Lovable, Replit)
+  ui/                   # Shadcn UI primitives
+    button.tsx
+    card.tsx
+    carousel.tsx
+    toast.tsx
+    toaster.tsx
+    use-toast.ts
 hooks/
   useExperience.ts      # `useExperiences` hook — fetches from /api/experiences
 drizzle/
   schema.ts             # `projects` and `experiences` table definitions
-  *.sql                 # Migration history
+  envConfig.ts          # Drizzle env configuration
+  *.sql                 # Migration history (0000–0004)
 utils/
   queryCache.ts         # In-memory fetch cache — wraps fetch() calls, not DB directly
 ```
@@ -85,6 +98,8 @@ utils/
 | Text primary | `#eae7e2` |
 | Text muted | `#5a5a5e` |
 | Accent green | `#4aff8b` |
+| Accent cyan | `var(--accent-cyan)` |
+| Accent violet | `var(--accent-violet)` |
 | Border | `#1e1e22` |
 
 ### Data fetching
@@ -109,6 +124,31 @@ Cards use a `linear-gradient` border with the `gradientBorder` keyframe defined 
 
 ### Mobile carousel slide animation
 `CoverflowCarousel` uses a CSS `@keyframes slideInRight` / `slideInLeft` injected via `<style>` and triggered by changing `key={animKey}` on the card wrapper. Direction is tracked with a `direction` state set before each index change.
+
+### CSS keyframes (defined in globals.css)
+| Keyframe | Purpose |
+|----------|---------|
+| `gradientBorder` | Rotating gradient border on cards |
+| `slideInRight` / `slideInLeft` | Mobile carousel slide transitions |
+| `blink` | Blinking caret for typing cursor effect |
+| `fade-in` | Scroll reveal — opacity + translateY(20px) |
+| `fade-in-left` | Scroll reveal — opacity + translateX(-20px) |
+| `marquee` | Horizontal auto-scroll for tech stack carousel |
+| `float` | Vertical bounce (8px up/down) |
+| `glow-pulse` | Box-shadow pulsing glow |
+
+### CSS utility classes (defined in globals.css)
+| Class | Purpose |
+|-------|---------|
+| `.text-gradient` | Gradient text via background-clip |
+| `.glass` | Frosted glass card (backdrop-blur + semi-transparent bg) |
+| `.glow-border` | Animated glow border on hover |
+| `.gradient-border-hover` | Rotating gradient border on hover |
+| `.grid-bg` | Dotted grid background pattern |
+| `.blink-caret` | Typing cursor effect |
+| `.section-heading` | Numbered section header (monospace accent) |
+| `.story-link` | Animated underline on hover |
+| `.card-email_input` | Styled contact form input with focus states |
 
 ## Database Schema
 

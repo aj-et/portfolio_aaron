@@ -19,7 +19,9 @@ import openclaw from './openclaw-color.svg'
 import vercel from './vercel.svg'
 import lovable from './lovable-color.svg'
 import replit from './replit-color.svg'
+import sql from './database.webp'
+import python from './python.webp'
 
 
 
-export { css, html, figma, git, javascript, mongodb, nodejs, reactjs, tailwind, typescript, claude, openai, perplexity, grok, claudecode, codex, cursor, openclaw, vercel, lovable, replit }
+export { css, html, figma, git, javascript, mongodb, nodejs, reactjs, tailwind, typescript, claude, openai, perplexity, grok, claudecode, codex, cursor, openclaw, vercel, lovable, replit, sql, python }
