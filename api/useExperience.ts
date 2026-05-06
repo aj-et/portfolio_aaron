@@ -1,21 +1,19 @@
 'use client'
 
-// useExperiences.ts
 import { useState, useEffect } from 'react';
-import { experiences } from '@/drizzle/schema';
-import { useCachedQuery } from '@/utils/queryCache';
+import { cachedFetch } from '@/utils/queryCache';
 
 type Experience = {
-    id: number;
-    positionName: string;
-    employeeName: string;
-    dateStarted: string;
-    dateEnded: string;
-    description1: string;
-    description2: string;
-    description3: string;
-    imageUrl: string;
-  };
+  id: number;
+  positionName: string;
+  employeeName: string;
+  dateStarted: string;
+  dateEnded: string;
+  description1: string;
+  description2: string;
+  description3: string;
+  imageUrl: string;
+};
 
 const MONTHS: Record<string, number> = {
   Jan: 0, Feb: 1, Mar: 2, Apr: 3, May: 4, Jun: 5,
@@ -34,18 +32,14 @@ export const useExperiences = () => {
   const [experienceList, setExperienceList] = useState<Experience[]>([]);
 
   useEffect(() => {
-    const fetchExperiences = async () => {
-      try {
-        const result = await useCachedQuery<Experience>('experiences', experiences);
+    cachedFetch<Experience>('experiences', '/api/experiences')
+      .then(result => {
         const sorted = [...result].sort(
           (a, b) => parseMonthYear(b.dateStarted) - parseMonthYear(a.dateStarted)
-        );
-        setExperienceList(sorted);
-      } catch (error) {
-        console.error("Error fetching experiences:", error);
-      }
-    };
-    fetchExperiences();
+        )
+        setExperienceList(sorted)
+      })
+      .catch(err => console.error('Error fetching experiences:', err))
   }, []);
 
   return experienceList;
