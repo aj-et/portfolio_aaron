@@ -1,44 +1,54 @@
 'use client'
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react'
+import { cachedFetch } from '@/utils/queryCache'
+import SectionWrapper from '@/components/SectionWrapper'
 import Card_Projects from '@/components/Card_Projects'
 import CoverflowCarousel from '@/components/CoverflowCarousel'
-import { cachedFetch } from '@/utils/queryCache';
+import { Stagger, StaggerItem } from '@/components/Reveal'
 
 type Project = {
-  id: number;
-  name: string;
-  description: string;
-  image: string;
-  html_link: string;
-  github_link: string;
-};
+  id: number
+  name: string
+  description: string
+  image: string
+  html_link: string
+  github_link: string
+}
 
 const ProjectsPage = () => {
-  const [projectList, setProjectList] = useState<Project[]>([]);
+  const [projects, setProjects] = useState<Project[]>([])
 
   useEffect(() => {
     cachedFetch<Project>('projects', '/api/projects')
-      .then(result => setProjectList([...result].sort((a, b) => b.id - a.id)))
+      .then(r => setProjects([...r].sort((a, b) => b.id - a.id)))
       .catch(console.error)
   }, [])
 
   return (
-    <div className='flex flex-col justify-center'>
-      <h1 className='mb-10 text-2xl text-center'>Projects</h1>
+    <SectionWrapper id="projects" num="04" title="things_I've_built">
+      <p className="text-muted-foreground mb-10 font-mono text-sm">
+        <span className="text-primary">$</span> ls ~/projects | head -{projects.length || 12}
+      </p>
 
-      {/* Mobile: carousel */}
-      <div className='md:hidden'>
-        <CoverflowCarousel projects={projectList} />
+      {/* Mobile carousel */}
+      <div className="md:hidden">
+        <CoverflowCarousel projects={projects} />
       </div>
 
-      {/* Desktop: flex-wrap grid */}
-      <div className='hidden md:flex gap-4 flex-wrap justify-center'>
-        {projectList.map((project) => (
-          <Card_Projects key={project.id} project={project} />
+      {/* Desktop stagger grid */}
+      <Stagger
+        className="hidden md:grid sm:grid-cols-2 lg:grid-cols-3 gap-4"
+        stagger={0.06}
+        amount={0.05}
+      >
+        {projects.map(p => (
+          <StaggerItem key={p.id} as="div">
+            <Card_Projects project={p} />
+          </StaggerItem>
         ))}
-      </div>
-    </div>
+      </Stagger>
+    </SectionWrapper>
   )
 }
 

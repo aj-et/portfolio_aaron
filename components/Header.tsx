@@ -1,149 +1,84 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
-import Link from 'next/link'
+import { useState } from 'react'
+import { Menu, X } from 'lucide-react'
 
-const NAV_ITEMS = [
-  { id: 'about', label: 'About' },
-  { id: 'experience', label: 'Experience' },
-  { id: 'project', label: 'Projects' },
-  { id: 'contact', label: 'Contact Me' },
+const links = [
+  { href: '#about',      label: 'about' },
+  { href: '#experience', label: 'experience' },
+  { href: '#stack',      label: 'stack' },
+  { href: '#projects',   label: 'projects' },
+  { href: '#contact',    label: 'contact' },
 ]
 
 export const Header = () => {
-  const [scrolled, setScrolled] = useState(false)
-  const [menuOpen, setMenuOpen] = useState(false)
-
-  useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 20)
-      setMenuOpen(false)
-    }
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
-
-  const handleSmoothScroll = (id: string) => {
-    const element = document.getElementById(id)
-    if (element) element.scrollIntoView({ behavior: 'smooth' })
-  }
+  const [open, setOpen] = useState(false)
 
   return (
-    <div
-      style={{
-        position: 'relative',
-        padding: '16px 20px',
-        background: scrolled ? 'rgba(9,9,11,0.5)' : 'transparent',
-        backdropFilter: scrolled ? 'blur(12px)' : 'none',
-        transition: 'background 0.3s ease, backdrop-filter 0.3s ease',
-      }}
-    >
-      {/* top bar */}
-      <div className='flex flex-row justify-between items-center'>
-        <Link
-          href={'/'}
-          style={{
-            fontFamily: 'var(--font-mono), monospace',
-            color: '#4aff8b',
-            fontWeight: 700,
-            fontSize: '18px',
-            textDecoration: 'none',
-            letterSpacing: '-0.02em',
-          }}
-        >
-          &lt;/ Aaron &gt;
-        </Link>
+    <header className="fixed top-0 left-0 right-0 z-50">
+      <div className="glass border-b border-border/50">
+        <nav className="container mx-auto flex items-center justify-between px-6 py-4">
+          <a
+            href="#top"
+            className="font-mono text-primary text-lg font-bold tracking-tight hover:text-primary-glow transition-colors"
+          >
+            <span className="text-muted-foreground">&lt;/</span> aaron{' '}
+            <span className="text-muted-foreground">&gt;</span>
+          </a>
 
-        {/* desktop nav */}
-        <div className='hidden md:flex items-center space-x-6'>
-          {NAV_ITEMS.map(({ id, label }) => (
-            <button
-              key={id}
-              onClick={() => handleSmoothScroll(id)}
-              style={{
-                color: 'rgba(234,231,226,0.55)',
-                fontSize: '13px',
-                letterSpacing: '0.06em',
-                textTransform: 'uppercase',
-                background: 'none',
-                border: 'none',
-                cursor: 'pointer',
-                transition: 'color 0.2s',
-                fontFamily: 'var(--font-mono), monospace',
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = '#4aff8b')}
-              onMouseLeave={(e) => (e.currentTarget.style.color = 'rgba(234,231,226,0.55)')}
-            >
-              {label}
-            </button>
-          ))}
-        </div>
+          {/* Desktop nav */}
+          <ul className="hidden md:flex items-center gap-8 font-mono text-sm">
+            {links.map((l, i) => (
+              <li key={l.href}>
+                <a
+                  href={l.href}
+                  className="story-link text-muted-foreground hover:text-primary transition-colors"
+                >
+                  <span className="text-primary">{String(i + 1).padStart(2, '0')}.</span>{' '}
+                  {l.label}
+                </a>
+              </li>
+            ))}
+            <li>
+              <a
+                href="/resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-mono text-sm px-4 py-1.5 rounded border border-primary/40 text-primary hover:bg-primary/10 transition-colors"
+              >
+                resume.pdf
+              </a>
+            </li>
+          </ul>
 
-        {/* hamburger button */}
-        <button
-          className='md:hidden'
-          onClick={() => setMenuOpen(o => !o)}
-          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-          style={{
-            background: 'none',
-            border: 'none',
-            color: '#eae7e2',
-            fontSize: '22px',
-            cursor: 'pointer',
-            lineHeight: 1,
-            padding: '4px',
-          }}
-        >
-          {menuOpen ? '✕' : '☰'}
-        </button>
+          {/* Mobile toggle */}
+          <button
+            className="md:hidden text-primary"
+            onClick={() => setOpen(v => !v)}
+            aria-label="Toggle menu"
+          >
+            {open ? <X size={22} /> : <Menu size={22} />}
+          </button>
+        </nav>
+
+        {/* Mobile menu */}
+        {open && (
+          <ul className="md:hidden flex flex-col gap-4 px-6 pb-6 font-mono text-sm animate-fade-in">
+            {links.map((l, i) => (
+              <li key={l.href}>
+                <a
+                  href={l.href}
+                  onClick={() => setOpen(false)}
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
+                  <span className="text-primary">{String(i + 1).padStart(2, '0')}.</span>{' '}
+                  {l.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
-
-      {/* mobile dropdown */}
-      {menuOpen && (
-        <div
-          className='md:hidden'
-          style={{
-            position: 'absolute',
-            top: '100%',
-            left: 0,
-            right: 0,
-            background: 'rgba(9,9,11,0.95)',
-            backdropFilter: 'blur(12px)',
-            borderTop: '1px solid #1e1e22',
-            padding: '12px 0',
-            display: 'flex',
-            flexDirection: 'column',
-            zIndex: 50,
-          }}
-        >
-          {NAV_ITEMS.map(({ id, label }) => (
-            <button
-              key={id}
-              onClick={() => {
-                handleSmoothScroll(id)
-                setMenuOpen(false)
-              }}
-              style={{
-                color: 'rgba(234,231,226,0.55)',
-                fontSize: '13px',
-                letterSpacing: '0.06em',
-                textTransform: 'uppercase',
-                background: 'none',
-                border: 'none',
-                cursor: 'pointer',
-                fontFamily: 'var(--font-mono), monospace',
-                padding: '14px 24px',
-                textAlign: 'left',
-                transition: 'color 0.2s',
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = '#4aff8b')}
-              onMouseLeave={(e) => (e.currentTarget.style.color = 'rgba(234,231,226,0.55)')}
-            >
-              {label}
-            </button>
-          ))}
-        </div>
-      )}
-    </div>
+    </header>
   )
 }

@@ -1,87 +1,45 @@
-'use client'
+import SectionWrapper from '@/components/SectionWrapper'
 
-import React, { useEffect, useRef } from 'react'
+const AboutPage = () => (
+  <SectionWrapper id="about" num="01" title="about_me">
+    <div className="grid md:grid-cols-3 gap-10 items-start">
+      <div className="md:col-span-2 space-y-4 text-muted-foreground leading-relaxed">
+        <p>
+          Hi, I&apos;m <span className="text-foreground font-semibold">Aaron</span>! I have a deep passion for
+          software development — I love the challenge of turning ideas into functional applications. My
+          curiosity drives me to explore new technologies and methodologies, constantly seeking to learn
+          and innovate.
+        </p>
+        <p>
+          I thrive on problem-solving and enjoy diving into the latest trends in the tech world. Lately
+          I&apos;ve been building tools at the intersection of{' '}
+          <span className="text-primary">AI</span>,{' '}
+          <span className="text-primary">automation</span>, and{' '}
+          <span className="text-primary">web platforms</span> — from MCP integrations and
+          Firecrawl-powered scrapers to scheduled lead generators and AI newsletter pipelines.
+        </p>
+        <p>Always eager to expand my knowledge and embrace every opportunity to grow.</p>
+      </div>
 
-const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%&*'
-
-function scrambleText(
-  el: HTMLElement,
-  finalText: string,
-  duration: number,
-  onDone?: () => void
-) {
-  const len = finalText.length
-  let startTime: number | null = null
-
-  const frame = (ts: number) => {
-    if (!startTime) startTime = ts
-    const elapsed = ts - startTime
-    const progress = Math.min(elapsed / duration, 1)
-
-    let html = ''
-    for (let i = 0; i < len; i++) {
-      if (finalText[i] === ' ') { html += ' '; continue }
-      const threshold = (i / len) * 0.7 + 0.15
-      if (progress >= threshold) {
-        html += `<span style="color:#4aff8b">${finalText[i]}</span>`
-      } else {
-        html += `<span style="color:#5a5a5e">${CHARS[Math.floor(Math.random() * CHARS.length)]}</span>`
-      }
-    }
-    el.innerHTML = html
-
-    if (progress < 1) {
-      requestAnimationFrame(frame)
-    } else {
-      el.innerHTML = finalText
-      onDone?.()
-    }
-  }
-  requestAnimationFrame(frame)
-}
-
-const AboutPage = () => {
-  const headingRef = useRef<HTMLHeadingElement>(null)
-  const paraRef = useRef<HTMLParagraphElement>(null)
-
-  useEffect(() => {
-    const heading = headingRef.current
-    const para = paraRef.current
-    if (!heading || !para) return
-
-    para.style.opacity = '0'
-    para.style.transform = 'translateY(12px)'
-
-    scrambleText(heading, 'About Me', 1200, () => {
-      para.style.transition = 'opacity 0.7s ease, transform 0.7s ease'
-      para.style.opacity = '1'
-      para.style.transform = 'translateY(0)'
-    })
-  }, [])
-
-  return (
-    <div className='flex flex-col justify-center'>
-      <h1
-        ref={headingRef}
-        className='mb-10 text-2xl text-center'
-        style={{ fontFamily: 'var(--font-mono), monospace', minHeight: '1.5em' }}
-      >
-        About Me
-      </h1>
-      <p
-        ref={paraRef}
-        className='text-center md:w-[50%] mx-auto'
-        style={{ color: 'rgba(234,231,226,0.75)', lineHeight: 1.7 }}
-      >
-        Hi, I&apos;m Aaron! I have a deep passion for software development, where I love the
-        challenge of turning ideas into functional applications. My curiosity drives me to explore
-        new technologies and methodologies, constantly seeking to learn and innovate. I thrive on
-        problem-solving and enjoy diving into the latest trends in the tech world. Always eager to
-        expand my knowledge, I embrace every opportunity to grow in this ever-evolving field.
-      </p>
-      <div className='flex gap-4 flex-wrap justify-center' />
+      {/* Code-block style info card */}
+      <div className="glass glow-border rounded-lg p-5 font-mono text-sm shadow-[var(--shadow-card)]">
+        <div className="flex gap-1.5 mb-4">
+          <span className="w-3 h-3 rounded-full bg-destructive/70" />
+          <span className="w-3 h-3 rounded-full bg-yellow-500/70" />
+          <span className="w-3 h-3 rounded-full bg-primary/70" />
+        </div>
+        <pre className="text-xs leading-relaxed overflow-x-auto text-muted-foreground">
+{`const aaron = {
+  role: "Software Engineer",
+  location: "Utah, USA",
+  focus: ["AI", "Automation",
+          "Full-Stack"],
+  open_to_work: true,
+};`}
+        </pre>
+      </div>
     </div>
-  )
-}
+  </SectionWrapper>
+)
 
 export default AboutPage
