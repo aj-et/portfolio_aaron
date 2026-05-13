@@ -1,3 +1,5 @@
+export const revalidate = 0
+
 import { db } from '@/lib/data'
 import { projects as projectsTable } from '@/drizzle/schema'
 import Hero from '@/components/Hero'
