@@ -8,6 +8,9 @@ export const projects = pgTable('projects', {
     image: varchar('image', { length: 256 }).notNull(),
     html_link: varchar('html_link', { length: 256 }).notNull(),
     github_link: varchar('github_link', { length: 256 }).notNull(),
+    language: varchar('language', { length: 64 }),
+    languageColor: varchar('languageColor', { length: 16 }),
+    tags: varchar('tags', { length: 256 }),
 });
 
 export const experiences = pgTable('experiences', {

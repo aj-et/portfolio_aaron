@@ -122,7 +122,7 @@ const Card_Email = () => {
                 <CardContent>
                     <form onSubmit={handleSubmit}>
                         <div className="mb-4">
-                            <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
+                            <label htmlFor="name" className="block text-sm font-medium" style={{ color: 'rgba(234,231,226,0.65)' }}>Name</label>
                             <input
                                 type="text"
                                 id="name"
@@ -134,7 +134,7 @@ const Card_Email = () => {
                             />
                         </div>
                         <div className="mb-4">
-                            <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+                            <label htmlFor="email" className="block text-sm font-medium" style={{ color: 'rgba(234,231,226,0.65)' }}>Email</label>
                             <input
                                 type="email"
                                 id="email"
@@ -146,7 +146,7 @@ const Card_Email = () => {
                             />
                         </div>
                         <div className="mb-4">
-                            <label htmlFor="message" className="block text-sm font-medium text-gray-700">Message</label>
+                            <label htmlFor="message" className="block text-sm font-medium" style={{ color: 'rgba(234,231,226,0.65)' }}>Message</label>
                             <textarea
                                 id="message"
                                 name="message"
@@ -161,7 +161,8 @@ const Card_Email = () => {
                             <button
                                 type="submit"
                                 disabled={loading} // Disable the button while loading
-                                className={`px-4 py-2 font-semibold text-white bg-blue-500 rounded-sm hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                className={`px-4 py-2 font-semibold rounded-sm focus:outline-none ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                style={{ background: '#4aff8b', color: '#0a0a0b' }}
                             >
                                 {loading ? 'Sending...' : 'Send Message'}
                             </button>

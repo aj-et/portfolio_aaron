@@ -9,6 +9,19 @@ import {
     reactjs,
     tailwind,
     typescript,
+    claude,
+    openai, 
+    perplexity, 
+    grok, 
+    claudecode, 
+    codex, 
+    cursor, 
+    openclaw, 
+    vercel, 
+    lovable, 
+    replit,
+    sql,
+    python
 } from '../../public/images';
 
 const technologies = [
@@ -27,6 +40,14 @@ const technologies = [
     {
         name: 'TypeScript',
         image: typescript,
+    },
+    {
+        name: 'Python',
+        image: python,
+    },
+    {
+        name: 'SQL',
+        image: sql,
     },
     {
         name: 'React',
@@ -51,6 +72,50 @@ const technologies = [
     {
         name: 'Git',
         image: git,
+    },
+    {
+        name: 'Claude',
+        image: claude,
+    },
+    {
+        name: 'OpenAI',
+        image: openai,
+    },
+    {
+        name: 'Perplexity',
+        image: perplexity,
+    },
+    {
+        name: 'Grok',
+        image: grok,
+    },
+    {
+        name: 'ClaudeCode',
+        image: claudecode,
+    },
+    {
+        name: 'CodeX',
+        image: codex,
+    },
+    {
+        name: 'Cursor',
+        image: cursor,
+    },
+    {
+        name: 'OpenClaw',
+        image: openclaw,
+    },
+    {
+        name: 'Vercel',
+        image: vercel,
+    },
+    {
+        name: 'Lovable',
+        image: lovable,
+    },
+    {
+        name: 'Replit',
+        image: replit,
     },
 ]
 
